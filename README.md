@@ -41,7 +41,7 @@ You can then use these gateways like usual.
 
 ## Configuration
 
-Create config file `./config/packages/omnipay.yaml` or copy-paste from [example](config.example.yaml).<br>
+Create config file `./config/packages/omnipay.php` or copy-paste from [example](config.example.php).<br>
 Gateways can be configured in this file, i.e.:
 
 ``` yml
@@ -76,20 +76,23 @@ The configuration settings vary per gateway - see
 
 Custom gateways can be registered via the container by tagging them with `omnipay.gateway`:
 
-```yml
-# services.yaml
-services:
-    my.custom.gateway:
-        class: Path\To\CustomGateway
-        tags:
-            - { name: omnipay.gateway, alias: CustomGateway }
+```php
+# services.php
+    $services = $containerConfigurator->services();
 
-# omnipay.yaml
-omnipay:
-    methods:
-        # Reference the gateway alias here
-        CustomGateway:
-            apiKey: pa$$w0rd
+    $services->set('my.custom.gateway', 'Path\To\CustomGateway')
+        ->tag('omnipay.gateway', [
+            'alias' => 'CustomGateway',
+    ]);
+
+# omnipay.php
+    $containerConfigurator->extension('omnipay', [
+        'methods' => [
+            'CustomGateway' => [
+                'apiKey' => 'pa$$w0rd',
+            ],
+        ],
+    ]);
 ```
 
 You can then obtain the fully-configured gateway by its alias:
@@ -108,16 +111,19 @@ private function getCustomGateway(OmnipayManager $omnipay): GatewayInteface
 ### Default gateway
 
 Add default gateway key to your config:
-```yml
-# omnipay.yaml
-omnipay:
-    gateways:
-        MyGateway1:
-            apiKey: pa$$w0rd
-        MyGateway2:
-            apiKey: pa$$w0rd
-
-    default: MyGateway1
+```php
+# omnipay.php
+    $containerConfigurator->extension('omnipay', [
+        'gateways' => [
+            'MyGateway1' => [
+                'apiKey' => 'pa$$w0rd',
+            ],
+            'MyGateway2' => [
+                'apiKey' => 'pa$$w0rd',
+            ],
+        ],
+        'default' => 'MyGateway1',
+    ]);
 ```
 
 You can now get default gateway instance:
@@ -128,16 +134,21 @@ $omnipay->getDefaultGateway();
 ### Disabling gateways
 
 If need to disable a gateway but want to keep all the configuration add `disabled` key to the config:
-```yml
-# omnipay.yaml
-omnipay:
-    gateways:
-        MyGateway1:
-            apiKey: pa$$w0rd
-        MyGateway2:
-            apiKey: pa$$w0rd
-
-    disabled: [ MyGateway1 ]
+```php
+# omnipay.php
+    $containerConfigurator->extension('omnipay', [
+        'gateways' => [
+            'MyGateway1' => [
+                'apiKey' => 'pa$$w0rd',
+            ],
+            'MyGateway2' => [
+                'apiKey' => 'pa$$w0rd',
+            ],
+        ],
+        'disabled' => [
+            'MyGateway1',
+        ],
+    ]);
 ```
 
 `MyGateway1` gateway will be skipped during gateway registration now.

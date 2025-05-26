@@ -11,16 +11,6 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 class OmnipayManager
 {
     /**
-     * @var GatewayFactory
-     */
-    protected GatewayFactory $gatewayFactory;
-
-    /**
-     * @var array
-     */
-    protected array $config;
-
-    /**
      * @var GatewayInterface[]
      */
     protected array $storage;
@@ -45,10 +35,8 @@ class OmnipayManager
      */
     protected bool $initOnBoot = false;
 
-    public function __construct(GatewayFactory $gatewayFactory, array $config = [])
+    public function __construct(protected GatewayFactory $gatewayFactory, protected array $config = [])
     {
-        $this->gatewayFactory = $gatewayFactory;
-        $this->config = $config;
     }
 
     public function get(string $gatewayName): GatewayInterface
@@ -79,7 +67,7 @@ class OmnipayManager
 
     public function registerGateway(GatewayInterface $gatewayInstance, ?string $alias = null): void
     {
-        $name = $alias ?? Helper::getGatewayClassName(get_class($gatewayInstance));
+        $name = $alias ?? Helper::getGatewayClassName($gatewayInstance::class);
 
         if (in_array($name, $this->disabledGateways, true)) {
             return;

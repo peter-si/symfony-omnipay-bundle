@@ -35,7 +35,7 @@ class GatewayTagCompilerPassTest extends TestCase
         $methodCalls = $this->getMethodCallsByName($omnipayDefinition, 'registerGateway');
         $this->assertCount(1, $methodCalls);
 
-        list($reference, $alias) = reset($methodCalls);
+        [$reference, $alias] = reset($methodCalls);
         $this->assertReferenceEquals('test.gateway', $reference);
         $this->assertEquals('TestGateway', $alias);
     }
@@ -52,7 +52,7 @@ class GatewayTagCompilerPassTest extends TestCase
         $methodCalls = $this->getMethodCallsByName($omnipayDefinition, 'registerGateway');
         $this->assertCount(1, $methodCalls);
 
-        list($reference) = reset($methodCalls);
+        [$reference] = reset($methodCalls);
         $this->assertReferenceEquals('test.gateway', $reference);
     }
 
