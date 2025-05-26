@@ -13,10 +13,10 @@
     ],
     "require": {
         "ext-json": "*",
-        "php": "^7.4|^8.0|^8.1",
+        "php": "^7.4|^8.0|^8.1|^8.2|^8.3|^8.4",
         "league/omnipay": "^3",
-        "symfony/framework-bundle": "^4.4||^5.4||^6",
-        "symfony/cache": "^4.4||^5.4||^6"
+        "symfony/framework-bundle": "^4.4||^5.4||^6||^7",
+        "symfony/cache": "^4.4||^5.4||^6||^7"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -25,7 +25,8 @@
         "squizlabs/php_codesniffer": "^3.5",
         "phpstan/phpstan": "^1.7.10",
         "omnipay/paypal": "^3.0",
-        "php-http/guzzle7-adapter": "^1.0.0"
+        "php-http/guzzle7-adapter": "^1.0.0",
+        "http-interop/http-factory-guzzle": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -43,7 +44,8 @@
     },
     "config": {
         "allow-plugins": {
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "beta",

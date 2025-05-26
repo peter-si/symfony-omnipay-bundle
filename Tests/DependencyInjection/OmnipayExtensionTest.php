@@ -62,16 +62,16 @@ abstract class OmnipayExtensionTest extends TestCase
         $this->assertValidContainer($container);
     }
 
-	public function testOmnipayServiceWithNonExistingDefaultGateway(): void
+    public function testOmnipayServiceWithNonExistingDefaultGateway(): void
     {
-	    $this->expectException(InvalidConfigurationException::class);
-	    $this->createContainerFromFile('non-existing-default-gateway');
+        $this->expectException(InvalidConfigurationException::class);
+        $this->createContainerFromFile('non-existing-default-gateway');
     }
 
-	public function testOmnipayServiceWithDisabledDefaultGateway(): void
+    public function testOmnipayServiceWithDisabledDefaultGateway(): void
     {
-	    $this->expectException(InvalidConfigurationException::class);
-	    $this->createContainerFromFile('disabled-default-gateway');
+        $this->expectException(InvalidConfigurationException::class);
+        $this->createContainerFromFile('disabled-default-gateway');
     }
 
     protected static function getSampleMethodConfig(): array
@@ -98,12 +98,12 @@ abstract class OmnipayExtensionTest extends TestCase
         ];
 
         $container = new ContainerBuilder(new ParameterBag([
-            'kernel.bundles'     => $bundles,
-            'kernel.cache_dir'   => sys_get_temp_dir(),
-            'kernel.debug'       => false,
+            'kernel.bundles' => $bundles,
+            'kernel.cache_dir' => sys_get_temp_dir(),
+            'kernel.debug' => false,
             'kernel.environment' => 'test',
-            'kernel.name'        => 'kernel',
-            'kernel.root_dir'    => __DIR__,
+            'kernel.name' => 'kernel',
+            'kernel.root_dir' => __DIR__,
         ]));
 
         return $container;
@@ -127,9 +127,9 @@ abstract class OmnipayExtensionTest extends TestCase
 
     private function assertValidContainer(
         ContainerBuilder $container,
-        string $defaultGateway = null,
-        array $disabledGateways = [],
-        ?bool $initOnBoot = null
+        ?string          $defaultGateway = null,
+        array            $disabledGateways = [],
+        ?bool            $initOnBoot = null
     ): void
     {
         $this->assertTrue($container->hasDefinition('omnipay'));
@@ -150,13 +150,13 @@ abstract class OmnipayExtensionTest extends TestCase
 
         if ($initOnBoot) {
             $this->assertEquals(
-	            $initOnBoot,
+                $initOnBoot,
                 $this->getMethodCallArguments($definition, 'initOnBoot')
             );
         }
     }
 
-    private function getMethodCallArguments(Definition $definition, string $method)
+    private function getMethodCallArguments(Definition $definition, string $method): array
     {
         foreach ($definition->getMethodCalls() as [$methodName, $arguments]) {
             if ($methodName === $method) {
@@ -164,6 +164,6 @@ abstract class OmnipayExtensionTest extends TestCase
             }
         }
 
-        $this->assertTrue(false, sprintf('Method call %s has not been added to the definition', $method));
+        throw new \RuntimeException(sprintf('Method call %s has not been added to the definition', $method));
     }
 }
