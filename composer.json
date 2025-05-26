@@ -1,13 +1,13 @@
 {
-    "name": "alpy/symfony-omnipay-bundle",
-    "description": "Omnipay bundle for Symfony 4.4 / 5.x / 6.x / 7.x",
+    "name": "janwebdev/symfony-omnipay-bundle",
+    "description": "Omnipay bundle for Symfony 6.x / 7.x",
     "keywords": ["omnipay", "bundle", "symfony", "payment", "php", "gateway", "credit card"],
     "homepage": "https://github.com/peter-si/symfony-omnipay-bundle.git",
     "license": "MIT",
     "authors": [
         {
-            "name": "Peter Simoncic",
-            "email": "ps@alpy.com",
+            "name": "Yan Rogozinsky",
+            "email": "janwebdev@gmail.com",
             "role": "PHP developer"
         }
     ],
